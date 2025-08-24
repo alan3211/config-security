@@ -1,3 +1,24 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${CONFIG_HOST:localhost}:8101
+      client:
+        registration:
+          client-app:
+            provider: spring
+            client-id: sec-pisa
+            client-secret: 12345
+            authorization-grant-type: authorization_code
+            redirect-uri: http://${CONFIG_HOST:localhost}:8090/authorized
+            scope:
+              - openid
+              - profile
+            client-name: client-app
+        provider:
+          spring:
+            issuer-uri: http://${CONFIG_HOST:localhost}:8101
 eureka:
   client:
     service-url:
