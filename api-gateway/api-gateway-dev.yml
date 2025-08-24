@@ -1,16 +1,4 @@
 spring:
-  cloud:
-    gateway:
-      default-filters:
-        - TokenRelay
-      routes:
-        - id: msvc-catalogos
-          uri: http://msvc-catalogos:8080
-          predicates:
-            - Path=/api/v1/rva/catalogos/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - SaveSession
   security:
     oauth2:
       client:
@@ -25,7 +13,6 @@ spring:
         provider:
           spring:
             issuer-uri: http://${CONFIG_HOST:localhost}:8101
-
 eureka:
   client:
     service-url:
