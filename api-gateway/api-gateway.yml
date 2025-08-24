@@ -1,0 +1,14 @@
+server:
+  port:  8090
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: DEBUG
+          datasource: DEBUG
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
