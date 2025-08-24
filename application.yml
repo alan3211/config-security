@@ -80,7 +80,7 @@ spring:
                       - 401
                       - 400
                 - RemoveRequestHeader=Cookie
-                - SaveSession      -
+                - SaveSession
 
             - id: msvc-cipher
               uri: lb://msvc-cipher
