@@ -6,6 +6,12 @@ logging:
           core: DEBUG
           datasource: DEBUG
 
+spring:
+  security:
+    jwt:
+      issuer: http://localhost:8101
+      access-ttl-seconds: 3600
+
 eureka:
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}

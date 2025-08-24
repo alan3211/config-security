@@ -9,11 +9,25 @@ spring:
     lazy-initialization: true
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
       default-filters:
         - TokenRelay
+        - SaveSession
       server:
         webflux:
           routes:
+            - id: auth-login
+              uri: http://${CONFIG_HOST:localhost}:8101
+              predicates:
+                - Path=/api/auth/login
+              filters:
+                - StripPrefix=1
             - id: msvc-catalogos
               uri: lb://msvc-catalogos
               predicates:
@@ -46,7 +60,6 @@ spring:
                       - 401
                       - 400
                 - RemoveRequestHeader=Cookie
-                - SaveSession
 
             - id: msvc-reclutamiento-consulta-cita
               uri: lb://msvc-reclutamiento-consulta-cita
@@ -63,7 +76,6 @@ spring:
                       - 401
                       - 400
                 - RemoveRequestHeader=Cookie
-                - SaveSession
 
             - id: msvc-reclutamiento-reagenda-cita
               uri: lb://msvc-reclutamiento-reagenda-cita
@@ -80,7 +92,6 @@ spring:
                       - 401
                       - 400
                 - RemoveRequestHeader=Cookie
-                - SaveSession
 
             - id: msvc-cipher
               uri: lb://msvc-cipher
@@ -97,7 +108,6 @@ spring:
                       - 401
                       - 400
                 - RemoveRequestHeader=Cookie
-                - SaveSession
             - id: msvc-auth
               uri: lb://msvc-auth
               predicates:
@@ -114,7 +124,6 @@ spring:
                       - 400
                 - StripPrefix=4
                 - RemoveRequestHeader=Cookie
-                - SaveSession
 management:
   endpoints:
     web:
