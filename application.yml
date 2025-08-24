@@ -9,11 +9,19 @@ spring:
     lazy-initialization: true
   cloud:
     gateway:
-      default-filters:
-        - TokenRelay
-        - SaveSession
       server:
         webflux:
+          globalcors:
+            cors-configurations:
+              "[/**]":
+                allowed-origins:
+                  - "http://localhost:4200"
+                allowed-methods: "*"
+                allowed-headers: "*"
+                allow-credentials: true
+            default-filters:
+              - TokenRelay
+              - SaveSession
           routes:
             - id: auth-login
               uri: http://${CONFIG_HOST:localhost}:8101
