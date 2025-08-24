@@ -13,6 +13,12 @@ logging:
           core: DEBUG
           datasource: DEBUG
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 eureka:
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
