@@ -9,6 +9,8 @@ spring:
     lazy-initialization: true
   cloud:
     gateway:
+      default-filters:
+        - TokenRelay
       server:
         webflux:
           routes:
@@ -26,7 +28,8 @@ spring:
                       - 403
                       - 401
                       - 400
-              # args.fallbackUri: forward:/api/v1/rva/catalogos/fallback
+                - RemoveRequestHeader=Cookie
+                - SaveSession
 
             - id: msvc-reclutamiento-alta-cita
               uri: lb://msvc-reclutamiento-alta-cita
@@ -42,7 +45,8 @@ spring:
                       - 403
                       - 401
                       - 400
-              # args.fallbackUri: forward:/api/v1/rva/alta-cita/fallback
+                - RemoveRequestHeader=Cookie
+                - SaveSession
 
             - id: msvc-reclutamiento-consulta-cita
               uri: lb://msvc-reclutamiento-consulta-cita
@@ -58,7 +62,8 @@ spring:
                       - 403
                       - 401
                       - 400
-              # args.fallbackUri: forward:/api/v1/rva/alta-consulta/fallback
+                - RemoveRequestHeader=Cookie
+                - SaveSession
 
             - id: msvc-reclutamiento-reagenda-cita
               uri: lb://msvc-reclutamiento-reagenda-cita
@@ -74,6 +79,8 @@ spring:
                       - 403
                       - 401
                       - 400
+                - RemoveRequestHeader=Cookie
+                - SaveSession      -
 
             - id: msvc-cipher
               uri: lb://msvc-cipher
@@ -89,7 +96,8 @@ spring:
                       - 403
                       - 401
                       - 400
-
+                - RemoveRequestHeader=Cookie
+                - SaveSession
             - id: msvc-auth
               uri: lb://msvc-auth
               predicates:
@@ -105,7 +113,8 @@ spring:
                       - 401
                       - 400
                 - StripPrefix=4
-
+                - RemoveRequestHeader=Cookie
+                - SaveSession
 management:
   endpoints:
     web:
