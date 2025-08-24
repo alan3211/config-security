@@ -9,13 +9,6 @@ spring:
     lazy-initialization: true
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          "[/**]":
-            allowedOrigins: "http://localhost:4200"
-            allowedMethods: "*"
-            allowedHeaders: "*"
-            allowCredentials: true
       default-filters:
         - TokenRelay
         - SaveSession
