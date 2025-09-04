@@ -1,9 +1,13 @@
 spring:
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${CONFIG_HOST:localhost}:8101
       client:
         registration:
           spring:
+            provider: spring
             client-id: sec-pisa
             client-secret: 12345
             authorization-grant-type: authorization_code
