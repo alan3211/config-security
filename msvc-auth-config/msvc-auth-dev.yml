@@ -1,2 +1,5 @@
 server:
   port: 8101
+
+jwt:
+  secret: clave-secreta-123
