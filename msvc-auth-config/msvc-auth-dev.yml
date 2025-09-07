@@ -2,4 +2,4 @@ server:
   port: 8101
 
 jwt:
-  secret: dS8fM9NqH4vR9u1oY7wP6e2hT0bF3aV8cL6kJ4nZ5xA1gR7mT9uE4yQ2wH6nV5s
+  secret: OvUxTJGujwgPHF9e88YWVd+0yoMLvsjz+45Ak5DBH/5xIGZ2breWAWpkjHf5CfgPycEIPHBJzb9IW+UneGTWPQ==
