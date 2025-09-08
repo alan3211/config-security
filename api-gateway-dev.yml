@@ -1,7 +1,7 @@
 spring:
   client:
     service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      defaultZone: http://eureka-server:8761/eureka
   security:
     oauth2:
       resourceserver:

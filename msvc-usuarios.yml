@@ -11,12 +11,12 @@ eureka:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
   client:
     service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      defaultZone: http://eureka-server:8761/eureka
 
 resilience4j:
   circuitbreaker:
     instances:
-      msvc-cipher:
+      msvc-usuarios:
         register-health-indicator: true
         allow-health-indicator-to-fail: true
         event-consumer-buffer-size: 10
@@ -36,6 +36,7 @@ management:
     web:
       exposure:
         include: '*'
+
 feign:
   client:
     config:
@@ -45,7 +46,6 @@ feign:
         loggerLevel: basic
 
 # SP a ejecutar
-reclutamiento:
-  reagenda-cita:
-    sp:
-      name: Admin_Reagendarcita
+catalogos:
+  sp:
+    name: Admin_ConsultaCatalogos

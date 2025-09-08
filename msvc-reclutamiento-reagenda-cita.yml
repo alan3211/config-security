@@ -11,7 +11,7 @@ eureka:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
   client:
     service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      defaultZone: http://eureka-server:8761/eureka
 
 resilience4j:
   circuitbreaker:
@@ -46,6 +46,6 @@ feign:
 
 # SP a ejecutar
 reclutamiento:
-  consulta-cita:
+  reagenda-cita:
     sp:
-      name: Admin_ConsultaCitasEntrevista
+      name: Admin_Reagendarcita
