@@ -19,9 +19,9 @@ spring:
                 allowed-methods: "*"
                 allowed-headers: "*"
                 allow-credentials: true
-            default-filters:
-              - TokenRelay
-              - SaveSession
+          default-filters:
+            - TokenRelay
+            - SaveSession
           routes:
             - id: auth-login
               uri: http://${CONFIG_HOST:localhost}:8101
