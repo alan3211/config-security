@@ -19,14 +19,30 @@ spring:
                 allowed-methods: "*"
                 allowed-headers: "*"
                 allow-credentials: true
-          default-filters:
-            - TokenRelay
-            - SaveSession
-          routes:
+      default-filters:
+        - TokenRelay
+        - SaveSession
+      routes:
             - id: auth-login
-              uri: http://${CONFIG_HOST:localhost}:8101
+              uri: http://msvc-auth:8101
               predicates:
                 - Path=/auth/login
+            - id: msvc-usuarios
+              uri: lb://msvc-usuarios
+              predicates:
+                - Path=/api/v1/rva/usuarios/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-usuarios
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - SaveSession
             - id: msvc-catalogos
               uri: lb://msvc-catalogos
               predicates:
@@ -123,6 +139,10 @@ spring:
                       - 400
                 - StripPrefix=4
                 - RemoveRequestHeader=Cookie
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
 management:
   endpoints:
     web:
@@ -165,6 +185,8 @@ resilience4j:
         base-config: defecto
       msvc-auth:
         base-config: defecto
+      msvc-usuarios:
+        base-config: defecto
 
   # Configuración de Resilience4j Time Limiter
   timelimiter:
@@ -180,4 +202,6 @@ resilience4j:
       msvc-cipher:
         base-config: defecto
       msvc-auth:
+        base-config: defecto
+      msvc-usuarios:
         base-config: defecto

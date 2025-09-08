@@ -11,7 +11,7 @@ eureka:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
   client:
     service-url:
-      defaultZone: http://${CONFIG_HOST:localhost}:8761/eureka
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
 
 resilience4j:
   circuitbreaker:
@@ -23,11 +23,6 @@ resilience4j:
         failure-rate-threshold: 50
 
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://${CONFIG_HOST:localhost}:8101/oauth2/jwks
   datasource:
     url: jdbc:mysql://sistema-divisas-bd-dev-mx01.mysql.database.azure.com:3306/db_security
     username: usr_divisas

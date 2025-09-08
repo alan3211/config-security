@@ -16,7 +16,7 @@ eureka:
 resilience4j:
   circuitbreaker:
     instances:
-      msvc-cipher:
+      msvc-usuarios:
         register-health-indicator: true
         allow-health-indicator-to-fail: true
         event-consumer-buffer-size: 10
@@ -36,6 +36,7 @@ management:
     web:
       exposure:
         include: '*'
+
 feign:
   client:
     config:
@@ -45,7 +46,6 @@ feign:
         loggerLevel: basic
 
 # SP a ejecutar
-reclutamiento:
-  alta-cita:
-    sp:
-      name: Admin_GuardaCitaEntrevista
+catalogos:
+  sp:
+    name: Admin_ConsultaCatalogos

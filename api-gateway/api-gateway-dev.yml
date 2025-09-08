@@ -1,4 +1,9 @@
 spring:
   client:
     service-url:
-      defaultZone: http://${CONFIG_HOST:localhost}:8761/eureka
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://msvc-auth:8101
