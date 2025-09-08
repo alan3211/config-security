@@ -2,7 +2,7 @@ server:
   port:  8090
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:OvUxTJGujwgPHF9e88YWVd+0yoMLvsjz+45Ak5DBH/5xIGZ2breWAWpkjHf5CfgPycEIPHBJzb9IW+UneGTWPQ==}
 
 logging:
   level:
