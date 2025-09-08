@@ -26,9 +26,7 @@ spring:
             - id: auth-login
               uri: http://${CONFIG_HOST:localhost}:8101
               predicates:
-                - Path=/api/auth/login
-              filters:
-                - StripPrefix=1
+                - Path=/auth/login
             - id: msvc-catalogos
               uri: lb://msvc-catalogos
               predicates:
