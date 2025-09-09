@@ -2,7 +2,7 @@ jwt:
   secret: OvUxTJGujwgPHF9e88YWVd+0yoMLvsjz+45Ak5DBH/5xIGZ2breWAWpkjHf5CfgPycEIPHBJzb9IW+UneGTWPQ==
 
 server:
-  port:  8090
+  port: 8090
   tomcat:
     max-threads: 20
     accept-count: 50
@@ -22,130 +22,120 @@ spring:
                 allowed-methods: "*"
                 allowed-headers: "*"
                 allow-credentials: true
-      default-filters:
-        - TokenRelay
-        - SaveSession
-      routes:
-        - id: auth-login
-          uri: http://msvc-auth:8101
-          predicates:
-            - Path=/auth/login
-        - id: msvc-usuarios
-          uri: lb://msvc-usuarios
-          predicates:
-            - Path=/api/v1/rva/usuarios/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: msvc-usuarios
-                statusCodes:
-                  - 500
-                  - 404
-                  - 403
-                  - 401
-                  - 400
-            - RemoveRequestHeader=Cookie
-            - SaveSession
-        - id: msvc-catalogos
-          uri: lb://msvc-catalogos
-          predicates:
-            - Path=/api/v1/rva/catalogos/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: msvc-catalogos
-                statusCodes:
-                  - 500
-                  - 404
-                  - 403
-                  - 401
-                  - 400
-            - RemoveRequestHeader=Cookie
-            - SaveSession
+          routes:
+            - id: msvc-usuarios
+              uri: lb://msvc-usuarios
+              predicates:
+                - Path=/api/v1/rva/usuarios/**
+              filters:
+                - TokenRelay
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-usuarios
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - SaveSession
+            - id: msvc-catalogos
+              uri: lb://msvc-catalogos
+              predicates:
+                - Path=/api/v1/rva/catalogos/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-catalogos
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - SaveSession
+                - TokenRelay
+            - id: msvc-reclutamiento-alta-cita
+              uri: lb://msvc-reclutamiento-alta-cita
+              predicates:
+                - Path=/api/v1/rva/alta-cita/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-reclutamiento-alta-cita
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - TokenRelay
+            - id: msvc-reclutamiento-consulta-cita
+              uri: lb://msvc-reclutamiento-consulta-cita
+              predicates:
+                - Path=/api/v1/rva/consulta-cita/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-reclutamiento-consulta-cita
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - TokenRelay
+            - id: msvc-reclutamiento-reagenda-cita
+              uri: lb://msvc-reclutamiento-reagenda-cita
+              predicates:
+                - Path=/api/v1/rva/reagenda-cita/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-reclutamiento-reagenda-cita
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - TokenRelay
+            - id: msvc-cipher
+              uri: lb://msvc-cipher
+              predicates:
+                - Path=/api/v1/rva/cipher/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-cipher
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - TokenRelay
+            - id: msvc-auth
+              uri: lb://msvc-auth
+              predicates:
+                - Path=/api/v1/rva/auth/**
+              filters:
+                # El filtro TokenRelay ha sido eliminado de aquí
+                - name: RewritePath
+                  args:
+                    regexp: /api/v1/rva/auth/(?<remaining>.*)
+                    replacement: /${remaining}
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
 
-        - id: msvc-reclutamiento-alta-cita
-          uri: lb://msvc-reclutamiento-alta-cita
-          predicates:
-            - Path=/api/v1/rva/alta-cita/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: msvc-reclutamiento-alta-cita
-                statusCodes:
-                  - 500
-                  - 404
-                  - 403
-                  - 401
-                  - 400
-            - RemoveRequestHeader=Cookie
-
-        - id: msvc-reclutamiento-consulta-cita
-          uri: lb://msvc-reclutamiento-consulta-cita
-          predicates:
-            - Path=/api/v1/rva/consulta-cita/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: msvc-reclutamiento-consulta-cita
-                statusCodes:
-                  - 500
-                  - 404
-                  - 403
-                  - 401
-                  - 400
-            - RemoveRequestHeader=Cookie
-
-        - id: msvc-reclutamiento-reagenda-cita
-          uri: lb://msvc-reclutamiento-reagenda-cita
-          predicates:
-            - Path=/api/v1/rva/reagenda-cita/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: msvc-reclutamiento-reagenda-cita
-                statusCodes:
-                  - 500
-                  - 404
-                  - 403
-                  - 401
-                  - 400
-            - RemoveRequestHeader=Cookie
-
-        - id: msvc-cipher
-          uri: lb://msvc-cipher
-          predicates:
-            - Path=/api/v1/rva/cipher/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: msvc-cipher
-                statusCodes:
-                  - 500
-                  - 404
-                  - 403
-                  - 401
-                  - 400
-            - RemoveRequestHeader=Cookie
-        - id: msvc-auth
-          uri: lb://msvc-auth
-          predicates:
-            - Path=/api/v1/rva/auth/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: msvc-auth
-                statusCodes:
-                  - 500
-                  - 404
-                  - 403
-                  - 401
-                  - 400
-            - StripPrefix=4
-            - RemoveRequestHeader=Cookie
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
 management:
   endpoints:
     web:
@@ -164,7 +154,6 @@ logging:
   level:
     root: INFO
 
-# Configuración de Resilience4j Circuit Breaker
 resilience4j:
   circuitbreaker:
     configs:
@@ -190,8 +179,6 @@ resilience4j:
         base-config: defecto
       msvc-usuarios:
         base-config: defecto
-
-  # Configuración de Resilience4j Time Limiter
   timelimiter:
     configs:
       defecto:
@@ -212,3 +199,6 @@ resilience4j:
 eureka:
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
