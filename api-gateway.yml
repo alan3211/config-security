@@ -125,13 +125,8 @@ spring:
               uri: lb://msvc-auth
               predicates:
                 - Path=/api/v1/rva/auth/**
-                - StripPrefix=4
               filters:
-                # El filtro TokenRelay ha sido eliminado de aquí
-                - name: RewritePath
-                  args:
-                    regexp: /api/v1/rva/auth/(?<remaining>.*)
-                    replacement: /${remaining}
+                - StripPrefix=4
           discovery:
             locator:
               enabled: true
