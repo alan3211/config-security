@@ -13,6 +13,13 @@ logging:
           core: DEBUG
           datasource: DEBUG
 
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://msvc-auth:8101
+
 management:
   endpoints:
     web:
