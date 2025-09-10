@@ -16,13 +16,18 @@ eureka:
 resilience4j:
   circuitbreaker:
     instances:
-      msvc-cipher:
+      msvc-reclutamiento-envio-entrevista:
         register-health-indicator: true
         allow-health-indicator-to-fail: true
         event-consumer-buffer-size: 10
         failure-rate-threshold: 50
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://msvc-auth:8101
   datasource:
     url: jdbc:mysql://sistema-divisas-bd-dev-mx01.mysql.database.azure.com:3306/db_security
     username: usr_divisas
@@ -30,11 +35,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     jdbc.dialect: mysql
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://msvc-auth:8101
 
 management:
   endpoints:
@@ -51,6 +51,6 @@ feign:
 
 # SP a ejecutar
 reclutamiento:
-  alta-cita:
+  envio-entrevista:
     sp:
-      name: Admin_GuardaCitaEntrevista
+      name: Admin_EnvioEntrevista
