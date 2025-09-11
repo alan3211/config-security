@@ -1,0 +1,31 @@
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: DEBUG
+          datasource: DEBUG
+
+spring:
+  security:
+    jwt:
+      issuer: http://msvc-auth:8101
+      access-ttl-seconds: 3600
+    oauth2:
+      authorization-server:
+        issuer: http://msvc-auth:8101
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      msvc-cipher:
+        register-health-indicator: true
+        allow-health-indicator-to-fail: true
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 50
