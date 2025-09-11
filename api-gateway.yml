@@ -10,7 +10,7 @@ spring:
   cloud:
     gateway:
       httpclient:
-        connect-timeout: 5000          # 5s para establecer conexión con el microservicio
+        connect-timeout: 10000          # 10s para establecer conexión con el microservicio
         response-timeout: 60s          # 60s esperando respuesta antes de cortar con 504
       server:
         webflux:
@@ -129,6 +129,22 @@ spring:
                 - name: CircuitBreaker
                   args:
                     name: msvc-reclutamiento-envio-entrevista
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - TokenRelay
+            - id: msvc-reclutamiento-seguimiento
+              uri: lb://msvc-reclutamiento-seguimiento
+              predicates:
+                - Path=/api/v1/rva/seguimiento-candidato/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-reclutamiento-seguimiento
                     statusCodes:
                       - 500
                       - 404
