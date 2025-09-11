@@ -217,7 +217,7 @@ resilience4j:
   timelimiter:
     configs:
       defecto:
-        timeout-duration: 3s
+        timeout-duration: 60s
       msvc-catalogos:
         base-config: defecto
       msvc-reclutamiento-alta-cita:
