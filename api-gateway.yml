@@ -9,6 +9,9 @@ spring:
     lazy-initialization: true
   cloud:
     gateway:
+      httpclient:
+        connect-timeout: 5000          # 5s para establecer conexión con el microservicio
+        response-timeout: 60s          # 60s esperando respuesta antes de cortar con 504
       server:
         webflux:
           globalcors:
@@ -78,6 +81,22 @@ spring:
                 - name: CircuitBreaker
                   args:
                     name: msvc-reclutamiento-consulta-cita
+                    statusCodes:
+                      - 500
+                      - 404
+                      - 403
+                      - 401
+                      - 400
+                - RemoveRequestHeader=Cookie
+                - TokenRelay
+            - id: msvc-reclutamiento-consulta-entrevista
+              uri: lb://msvc-reclutamiento-consulta-entrevista
+              predicates:
+                - Path=/api/v1/rva/consulta-entrevista/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: msvc-reclutamiento-consulta-entrevista
                     statusCodes:
                       - 500
                       - 404
