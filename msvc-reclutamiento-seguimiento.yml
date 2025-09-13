@@ -57,3 +57,8 @@ reclutamiento:
         spname: Admin_ConsultaControldocumentos
       guarda:
         spname: Admin_GuardaDocumentos
+    examen:
+      consulta:
+        spname: Admin_ConsultaControlexamenes
+      guarda:
+        spname: Admin_GuardaExamenes
