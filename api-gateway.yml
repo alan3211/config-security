@@ -12,8 +12,8 @@ spring:
       server:
         webflux:
           httpclient:
-            connect-timeout: 10000          # 10s para establecer conexión con el microservicio
-            response-timeout: 60s          # 60s esperando respuesta antes de cortar con 504
+            connect-timeout: 60000          # 60s para establecer conexión con el microservicio
+            response-timeout: 720s          # 12m esperando respuesta antes de cortar con 504
           globalcors:
             cors-configurations:
               "[/**]":
