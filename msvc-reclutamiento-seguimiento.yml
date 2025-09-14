@@ -54,11 +54,15 @@ reclutamiento:
   seguimiento:
     documentos:
       consulta:
-        spname: Admin_ConsultaControldocumentos
+        sp:
+          name: Admin_ConsultaControldocumentos
       guarda:
-        spname: Admin_GuardaDocumentos
+        sp:
+          name: Admin_GuardaDocumentos
     examen:
       consulta:
-        spname: Admin_ConsultaControlexamenes
+        sp:
+          name: Admin_ConsultaControlexamenes
       guarda:
-        spname: Admin_GuardaExamenes
+        sp:
+          name: Admin_GuardaExamenes
