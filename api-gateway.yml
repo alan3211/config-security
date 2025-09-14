@@ -13,7 +13,7 @@ spring:
         webflux:
           httpclient:
             connect-timeout: 60000          # 60s para establecer conexión con el microservicio
-            response-timeout: 720s          # 12m esperando respuesta antes de cortar con 504
+            response-timeout: 720s          # 60s esperando respuesta antes de cortar con 504
           globalcors:
             cors-configurations:
               "[/**]":
@@ -232,7 +232,26 @@ resilience4j:
         base-config: defecto
       msvc-usuarios:
         base-config: defecto
-
+  timelimiter:
+    configs:
+      defecto:
+        timeout-duration: 60s
+      msvc-catalogos:
+        base-config: defecto
+      msvc-reclutamiento-alta-cita:
+        base-config: defecto
+      msvc-reclutamiento-consulta-cita:
+        base-config: defecto
+      msvc-reclutamiento-envio-entrevista:
+        base-config: defecto
+      msvc-reclutamiento-seguimiento:
+        base-config: defecto
+      msvc-cipher:
+        base-config: defecto
+      msvc-auth:
+        base-config: defecto
+      msvc-usuarios:
+        base-config: defecto
 
 eureka:
   instance:
