@@ -1,0 +1,56 @@
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: DEBUG
+          datasource: DEBUG
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.uuid}
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      msvc-catalogos:
+        register-health-indicator: true
+        allow-health-indicator-to-fail: true
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 50
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://msvc-auth:8101
+  datasource:
+    url: jdbc:mysql://sistema-divisas-bd-dev-mx01.mysql.database.azure.com:3306/db_security
+    username: usr_divisas
+    password: smA3hQ8y!Sh2
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    jdbc.dialect: mysql
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 5000
+        loggerLevel: basic
+
+# SP a ejecutar
+catalogos:
+  sp:
+    name: Admin_ConsultaCatalogos

@@ -1,0 +1,36 @@
+server:
+  port: 8100
+
+crypto:
+  aes:
+    base64Key: iwG/dB3MzgEIydvGF2TzyPbZEJ9k4lya9Pd1hITrhts=
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: DEBUG
+          datasource: DEBUG
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://msvc-auth:8101
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      msvc-cipher:
+        register-health-indicator: true
+        allow-health-indicator-to-fail: true
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 50
